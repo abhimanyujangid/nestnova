@@ -74,7 +74,7 @@ describe('loadConfig', () => {
   });
 
   it('loads values from an env file', () => {
-    const directory = mkdtempSync(join(tmpdir(), 'nest-config-mvp-'));
+    const directory = mkdtempSync(join(tmpdir(), 'novanest-config-'));
     const envFilePath = join(directory, '.env');
 
     writeFileSync(envFilePath, 'DATABASE_URL=postgres://localhost:5432/app\nPORT=5000\n');

@@ -35,8 +35,9 @@ config.database.url;
 | Package | Status | Purpose |
 | --- | --- | --- |
 | `packages/config` | MVP | Typed environment configuration for NestJS |
+| `packages/queue` | MVP | Lightweight BullMQ queue integration for NestJS |
 
-The package is currently named `nest-config-mvp` locally. It should be renamed before publishing.
+The config package is now tracked as `@novanest/config` inside the workspace.
 
 ## Quick Start
 
@@ -91,6 +92,7 @@ apps/
   playground/     Local NestJS app for testing packages
 packages/
   config/         Reusable typed configuration package
+  queue/          Lightweight BullMQ queue package
 ```
 
 ## Development Philosophy
@@ -106,18 +108,18 @@ NestNova is built around a few simple rules:
 
 ## Current Scope
 
-The current focus is only the config package:
+The current focus is the foundation layer:
 
 - load environment variables
 - validate values with Zod
 - expose typed nested config
 - integrate cleanly with NestJS dependency injection
 - validate feature config only when that feature module is imported
+- provide a lightweight queue module powered by BullMQ and Redis
 
 Not in scope yet:
 
 - auth
-- queues
 - notifications
 - payments
 - AI generators

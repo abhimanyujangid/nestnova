@@ -1,4 +1,4 @@
-import { defineFeatureConfig, type InferConfig } from 'nest-config-mvp';
+import { defineFeatureConfig, type InferConfig } from '@novanest/config';
 import { z } from 'zod';
 
 export const queueConfig = defineFeatureConfig('queue', {
