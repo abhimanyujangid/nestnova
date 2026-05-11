@@ -1,9 +1,13 @@
 export {
+  defineFeatureConfig,
   defineConfig,
   type AnyConfigDefinition,
+  type AnyFeatureConfigDefinition,
+  type AnyRootConfigDefinition,
   type ConfigDefinition,
   type ConfigShape,
   type EnvSchema,
+  type FeatureConfigDefinition,
   type InferConfig,
 } from './define-config.js';
 export {
@@ -21,5 +25,6 @@ export {
 } from './config.module.js';
 export {
   CONFIG_TOKEN,
+  InjectFeatureConfig,
   InjectConfig,
 } from './inject-config.js';

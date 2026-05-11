@@ -2,12 +2,14 @@
 
 Typed environment configuration for NestJS applications.
 
-This package is an early MVP. It focuses on one clean workflow:
+This package is an early MVP. It focuses on two clean workflows:
 
 1. Define the raw environment schema with Zod.
 2. Validate values at startup.
 3. Resolve validated values into a nested config object.
 4. Inject that object into NestJS services.
+
+Use root config for application-wide values and feature config for optional modules.
 
 ## Define Config
 
@@ -72,13 +74,71 @@ export class DatabaseService {
 }
 ```
 
+## Feature Config
+
+Feature config lets ecosystem packages register their own schemas only when those packages are enabled.
+
+```ts
+import { defineFeatureConfig, type InferConfig } from 'nest-config-mvp';
+import { z } from 'zod';
+
+export const queueConfig = defineFeatureConfig('queue', {
+  env: z.object({
+    QUEUE_REDIS_URL: z.string().url(),
+  }),
+  resolve: (env) => ({
+    redis: {
+      url: env.QUEUE_REDIS_URL,
+    },
+  }),
+});
+
+export type QueueConfig = InferConfig<typeof queueConfig>;
+```
+
+Register the feature config inside the feature module:
+
+```ts
+import { Module } from '@nestjs/common';
+import { ConfigModule } from 'nest-config-mvp';
+
+import { queueConfig } from './queue.config';
+
+@Module({
+  imports: [ConfigModule.forFeature(queueConfig)],
+})
+export class QueueModule {}
+```
+
+Inject the feature config by definition:
+
+```ts
+import { Injectable } from '@nestjs/common';
+import { InjectFeatureConfig } from 'nest-config-mvp';
+
+import { queueConfig, type QueueConfig } from './queue.config';
+
+@Injectable()
+export class QueueService {
+  constructor(
+    @InjectFeatureConfig(queueConfig)
+    private readonly config: QueueConfig,
+  ) {}
+}
+```
+
+`QUEUE_REDIS_URL` is validated only when `QueueModule` imports `ConfigModule.forFeature(queueConfig)`.
+
 ## API
 
 - `defineConfig(definition)`: stores the Zod env schema and resolver.
+- `defineFeatureConfig(namespace, definition)`: defines config for an optional feature namespace.
 - `InferConfig<typeof appConfig>`: infers the resolved nested config type.
 - `loadConfig(definition, options)`: validates and resolves config outside Nest.
 - `ConfigModule.forRoot(definition, options)`: registers config in Nest.
+- `ConfigModule.forFeature(definition, options)`: registers feature config in Nest.
 - `InjectConfig()`: injects the resolved config provider.
+- `InjectFeatureConfig(definition)`: injects a resolved feature config provider.
 
 ## Options
 

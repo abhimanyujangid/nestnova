@@ -4,7 +4,7 @@ NestNova is an early-stage developer tooling ecosystem for NestJS.
 
 The goal is not to replace NestJS or create another backend framework. The goal is to build small, focused libraries that make NestJS applications simpler to configure, easier to maintain, and nicer to work with.
 
-The first package is a typed configuration library for environment loading, validation, and clean config access.
+The first package is a typed configuration library for environment loading, validation, clean config access, and feature-isolated config registration.
 
 ## Why This Exists
 
@@ -112,6 +112,7 @@ The current focus is only the config package:
 - validate values with Zod
 - expose typed nested config
 - integrate cleanly with NestJS dependency injection
+- validate feature config only when that feature module is imported
 
 Not in scope yet:
 
