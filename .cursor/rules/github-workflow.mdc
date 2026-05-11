@@ -1,0 +1,52 @@
+---
+description: GitHub workflow rules for branches, commits, pushes, and pull requests
+alwaysApply: true
+---
+
+# GitHub Workflow Rules
+
+Use a clean GitHub workflow for all project changes.
+
+## Branch Naming
+
+- Create a new branch for meaningful work unless the user explicitly wants to work on `main`.
+- Use short, readable branch names:
+  - `feat/config-env-validation`
+  - `fix/config-error-message`
+  - `docs/root-readme`
+  - `chore/package-setup`
+- Prefer prefixes: `feat/`, `fix/`, `docs/`, `test/`, `refactor/`, `chore/`.
+- Keep branch names lowercase and use hyphens.
+
+## Commits
+
+- Commit only when the user asks for a commit.
+- Keep commits focused on one logical change.
+- Use clear messages:
+  - `feat: add typed config module`
+  - `fix: improve env validation errors`
+  - `docs: update root readme`
+- Do not commit secrets, `.env` files, local caches, build output, or unrelated changes.
+
+## Pushes
+
+- Push only when the user asks to push or publish the branch.
+- Push feature branches with upstream tracking:
+  - `git push -u origin <branch-name>`
+- Never force push unless the user explicitly requests it and understands the risk.
+
+## Pull Requests
+
+- Open a PR for reviewable work after the branch is pushed.
+- PRs should include:
+  - short summary
+  - what changed
+  - test results
+  - any risks or follow-up work
+- Keep PRs small enough to review easily.
+
+## Main Branch
+
+- Keep `main` stable.
+- Do not commit directly to `main` for feature work unless the user specifically asks.
+- Prefer merge-ready branches with passing typecheck, tests, and build.
