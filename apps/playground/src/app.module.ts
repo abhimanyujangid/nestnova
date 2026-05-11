@@ -3,6 +3,7 @@ import { ConfigModule } from 'nest-config-mvp';
 
 import { AppService } from './app.service.js';
 import { appConfig } from './config.js';
+import { QueueModule } from './queue.module.js';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { appConfig } from './config.js';
       ignoreMissingEnvFile: true,
       isGlobal: true,
     }),
+    QueueModule,
   ],
   providers: [AppService],
 })

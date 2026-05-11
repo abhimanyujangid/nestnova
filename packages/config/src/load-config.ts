@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { parse } from 'dotenv';
 
-import type { AnyConfigDefinition, InferConfig } from './define-config.js';
+import type { ConfigDefinition, ConfigShape, EnvSchema } from './define-config.js';
 import { ConfigValidationError } from './errors.js';
 
 export type EnvSource = Record<string, string | undefined>;
@@ -16,10 +16,13 @@ export interface LoadConfigOptions {
   readonly ignoreMissingEnvFile?: boolean;
 }
 
-export function loadConfig<TDefinition extends AnyConfigDefinition>(
-  definition: TDefinition,
+export function loadConfig<
+  const TEnvSchema extends EnvSchema,
+  const TConfig extends ConfigShape,
+>(
+  definition: ConfigDefinition<TEnvSchema, TConfig>,
   options: LoadConfigOptions = {},
-): InferConfig<TDefinition> {
+): TConfig {
   const env = loadEnv(options);
   const result = definition.env.safeParse(env);
 
@@ -27,7 +30,7 @@ export function loadConfig<TDefinition extends AnyConfigDefinition>(
     throw ConfigValidationError.fromZodError(result.error);
   }
 
-  return definition.resolve(result.data) as InferConfig<TDefinition>;
+  return definition.resolve(result.data);
 }
 
 function loadEnv(options: LoadConfigOptions): EnvSource {
