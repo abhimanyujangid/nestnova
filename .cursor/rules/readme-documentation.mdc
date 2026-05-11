@@ -1,0 +1,40 @@
+---
+alwaysApply: true
+---
+# README Documentation Rules
+
+Use README files as product documentation, not random notes.
+
+## Root README
+
+The root `README.md` should explain the complete project at a high level:
+
+- what ModernStack / NestNova is
+- what problem it solves
+- current package list
+- quick start
+- basic example
+- development commands
+- project structure
+- roadmap or current scope
+
+Do not make the root README a deep technical spec for one package. Keep detailed API docs, edge cases, and package-specific examples in that package's own README.
+
+## Package README
+
+Each package README, such as `packages/config/README.md`, should document that package in detail:
+
+- installation
+- quick start
+- full API explanation
+- examples
+- options
+- limitations
+- testing or local development notes if useful
+
+## Style
+
+- Write for developers discovering the library for the first time.
+- Keep examples accurate and runnable.
+- Prefer simple explanations over marketing language.
+- Avoid documenting future features as if they already exist.

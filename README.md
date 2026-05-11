@@ -1,94 +1,125 @@
-# nestnova
+# NestNova
 
-A small learning-focused NestJS developer tooling library for typed environment configuration.
+NestNova is an early-stage developer tooling ecosystem for NestJS.
 
-The goal of this repository is to build one high-quality package before expanding into a larger ecosystem. The current package is intentionally narrow: validate environment variables with Zod, resolve them into a clean nested object, and inject that object into NestJS.
+The goal is not to replace NestJS or create another backend framework. The goal is to build small, focused libraries that make NestJS applications simpler to configure, easier to maintain, and nicer to work with.
 
-## Workspace
+The first package is a typed configuration library for environment loading, validation, and clean config access.
 
-```txt
-apps/
-  playground/     Local NestJS app for manual testing
-packages/
-  config/         Reusable config library package
+## Why This Exists
+
+Configuration in many NestJS projects often becomes repetitive:
+
+- environment variables are read manually
+- validation setup is repeated across projects
+- config values are accessed through string keys
+- missing values fail at runtime
+- autocomplete is limited
+
+NestNova starts by improving that workflow with a typed config package.
+
+Instead of this:
+
+```ts
+configService.get('DATABASE_URL');
 ```
 
-## Scripts
+The preferred direction is this:
+
+```ts
+config.database.url;
+```
+
+## Current Packages
+
+| Package | Status | Purpose |
+| --- | --- | --- |
+| `packages/config` | MVP | Typed environment configuration for NestJS |
+
+The package is currently named `nest-config-mvp` locally. It should be renamed before publishing.
+
+## Quick Start
+
+Install dependencies:
 
 ```bash
 pnpm install
-pnpm build
-pnpm test
-pnpm typecheck
 ```
 
-Run the playground:
+Run all checks:
+
+```bash
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+Run the playground app:
 
 ```bash
 cp apps/playground/.env.example apps/playground/.env
 pnpm --filter playground start
 ```
 
-## Example
+## Basic Example
 
 ```ts
-import { ConfigModule, defineConfig, InjectConfig, type InferConfig } from 'nest-config-mvp';
-import { z } from 'zod';
-
 const appConfig = defineConfig({
   env: z.object({
     DATABASE_URL: z.string().url(),
-    NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   }),
   resolve: (env) => ({
     database: {
       url: env.DATABASE_URL,
     },
-    app: {
-      env: env.NODE_ENV,
-    },
   }),
 });
-
-type AppConfig = InferConfig<typeof appConfig>;
 ```
+
+Then inject the resolved config in a NestJS provider:
 
 ```ts
-@Module({
-  imports: [ConfigModule.forRoot(appConfig, { isGlobal: true })],
-})
-export class AppModule {}
+constructor(@InjectConfig() private readonly config: AppConfig) {}
 ```
 
-```ts
-@Injectable()
-export class DatabaseService {
-  constructor(@InjectConfig() private readonly config: AppConfig) {}
+For full package documentation, see [`packages/config/README.md`](packages/config/README.md).
 
-  connect() {
-    return this.config.database.url;
-  }
-}
+## Project Structure
+
+```txt
+apps/
+  playground/     Local NestJS app for testing packages
+packages/
+  config/         Reusable typed configuration package
 ```
 
-## MVP Scope
+## Development Philosophy
 
-Included now:
+NestNova is built around a few simple rules:
 
-- process env loading
-- optional `.env` file loading
-- Zod validation
-- Zod defaults
-- typed nested config output
-- NestJS dynamic module integration
+- developer experience first
+- simple APIs over clever abstractions
+- strong TypeScript types
+- production-ready defaults
+- clear documentation
+- focused packages that solve one problem well
 
-Not included yet:
+## Current Scope
 
-- CLI generators
-- remote secrets
-- hot reloading
-- async factories
-- multiple named config namespaces
-- larger ecosystem packages
+The current focus is only the config package:
 
-The package name `nest-config-mvp` is temporary and should be renamed before publishing.
+- load environment variables
+- validate values with Zod
+- expose typed nested config
+- integrate cleanly with NestJS dependency injection
+
+Not in scope yet:
+
+- auth
+- queues
+- notifications
+- payments
+- AI generators
+- complex infrastructure
+
+Build one excellent library first, then expand carefully.
