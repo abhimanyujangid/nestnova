@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from 'nest-config-mvp';
+import { ConfigModule } from '@novanest/config';
+import { QueueModule } from '@novanest/queue';
 
 import { AppService } from './app.service.js';
 import { appConfig } from './config.js';
-import { QueueModule } from './queue.module.js';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { QueueModule } from './queue.module.js';
       ignoreMissingEnvFile: true,
       isGlobal: true,
     }),
-    QueueModule,
+    QueueModule.forRoot(),
   ],
   providers: [AppService],
 })

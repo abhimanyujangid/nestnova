@@ -1,7 +1,7 @@
 {
-  "name": "@novanest/config",
+  "name": "@novanest/queue",
   "version": "0.0.0",
-  "description": "Typed environment configuration for NestJS applications.",
+  "description": "Lightweight BullMQ queue integration for NovaNest applications.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -25,19 +25,26 @@
     "dev": "tsup --watch"
   },
   "dependencies": {
-    "dotenv": "^17.4.2",
+    "@nestjs/bullmq": "^11.0.4",
+    "@novanest/config": "workspace:*",
+    "bullmq": "^5.76.7",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@nestjs/common": "^11.1.19",
+    "@nestjs/core": "^11.1.19",
     "@nestjs/testing": "^11.1.19",
     "@types/node": "^25.6.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.5"
   },
   "peerDependencies": {
-    "@nestjs/common": "^11.1.19"
+    "@nestjs/common": "^11.1.19",
+    "@nestjs/core": "^11.1.19",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
   }
 }

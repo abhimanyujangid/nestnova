@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectConfig } from 'nest-config-mvp';
+import { InjectConfig } from '@novanest/config';
 
 import type { AppConfig } from './config.js';
 

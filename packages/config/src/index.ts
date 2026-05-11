@@ -28,3 +28,7 @@ export {
   InjectFeatureConfig,
   InjectConfig,
 } from './inject-config.js';
+export {
+  getFeatureConfigToken,
+  ROOT_CONFIG_TOKEN,
+} from './tokens.js';

@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "pnpm --filter nest-config-mvp build && tsx src/main.ts",
-    "dev": "pnpm --filter nest-config-mvp build && tsx watch src/main.ts",
+    "start": "pnpm --filter @novanest/config build && pnpm --filter @novanest/queue build && tsx src/main.ts",
+    "dev": "pnpm --filter @novanest/config build && pnpm --filter @novanest/queue build && tsx watch src/main.ts",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "tsc -p tsconfig.json --noEmit"
@@ -13,7 +13,8 @@
   "dependencies": {
     "@nestjs/common": "^11.1.19",
     "@nestjs/core": "^11.1.19",
-    "nest-config-mvp": "workspace:*",
+    "@novanest/config": "workspace:*",
+    "@novanest/queue": "workspace:*",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "zod": "^4.4.3"

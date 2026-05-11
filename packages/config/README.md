@@ -1,4 +1,4 @@
-# nest-config-mvp
+# @novanest/config
 
 Typed environment configuration for NestJS applications.
 
@@ -14,7 +14,7 @@ Use root config for application-wide values and feature config for optional modu
 ## Define Config
 
 ```ts
-import { defineConfig, type InferConfig } from 'nest-config-mvp';
+import { defineConfig, type InferConfig } from '@novanest/config';
 import { z } from 'zod';
 
 export const appConfig = defineConfig({
@@ -41,7 +41,7 @@ export type AppConfig = InferConfig<typeof appConfig>;
 
 ```ts
 import { Module } from '@nestjs/common';
-import { ConfigModule } from 'nest-config-mvp';
+import { ConfigModule } from '@novanest/config';
 
 import { appConfig } from './config';
 
@@ -60,7 +60,7 @@ export class AppModule {}
 
 ```ts
 import { Injectable } from '@nestjs/common';
-import { InjectConfig } from 'nest-config-mvp';
+import { InjectConfig } from '@novanest/config';
 
 import type { AppConfig } from './config';
 
@@ -79,7 +79,7 @@ export class DatabaseService {
 Feature config lets ecosystem packages register their own schemas only when those packages are enabled.
 
 ```ts
-import { defineFeatureConfig, type InferConfig } from 'nest-config-mvp';
+import { defineFeatureConfig, type InferConfig } from '@novanest/config';
 import { z } from 'zod';
 
 export const queueConfig = defineFeatureConfig('queue', {
@@ -100,7 +100,7 @@ Register the feature config inside the feature module:
 
 ```ts
 import { Module } from '@nestjs/common';
-import { ConfigModule } from 'nest-config-mvp';
+import { ConfigModule } from '@novanest/config';
 
 import { queueConfig } from './queue.config';
 
@@ -114,7 +114,7 @@ Inject the feature config by definition:
 
 ```ts
 import { Injectable } from '@nestjs/common';
-import { InjectFeatureConfig } from 'nest-config-mvp';
+import { InjectFeatureConfig } from '@novanest/config';
 
 import { queueConfig, type QueueConfig } from './queue.config';
 

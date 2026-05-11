@@ -1,4 +1,4 @@
-import { defineConfig, type InferConfig } from 'nest-config-mvp';
+import { defineConfig, type InferConfig } from '@novanest/config';
 import { z } from 'zod';
 
 export const appConfig = defineConfig({
