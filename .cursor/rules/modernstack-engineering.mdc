@@ -1,0 +1,70 @@
+---
+description: ModernStack engineering principles for NestJS ecosystem libraries
+alwaysApply: true
+---
+
+# ModernStack Engineering Rules
+
+ModernStack is a developer ecosystem on top of NestJS. Do not build a new backend framework. Build small, production-quality libraries that reduce developer pain and improve developer experience.
+
+Current package focus: `@modernstack/config`.
+
+## Product Principles
+
+- Optimize for developer experience, simplicity, scalability, maintainability, type safety, readability, and clean APIs.
+- Avoid unnecessary abstraction, premature optimization, clever code, and overengineering.
+- Every feature must answer: "Does this reduce complexity for developers?"
+- Prioritize clarity over cleverness.
+
+## Architecture
+
+- Use a Turborepo monorepo with `apps/` for playground/testing apps and `packages/` for reusable libraries.
+- Every package should solve one problem well and remain independently publishable.
+- Prefer modular architecture, composition, explicit APIs, predictable behavior, and minimal configuration.
+- Avoid tight coupling between packages or to NestJS internals.
+
+## Technology
+
+- Use TypeScript, pnpm, Turborepo, tsup, Vitest, and NestJS-compatible patterns.
+- Avoid unnecessary dependencies and prefer lightweight tooling.
+- Follow semantic versioning and avoid breaking public APIs unnecessarily.
+
+## Package Boundaries
+
+- Keep shared reusable code inside `packages/*`; keep `apps/*` as consumers and playgrounds only.
+- Export public APIs only from each package `src/index.ts`.
+- Treat exported names, types, options, and error behavior as product surface.
+- Do not let one package depend on another unless there is a clear ecosystem-level reason.
+
+## API Design
+
+- API quality is the highest priority.
+- Prefer readable, predictable, autocomplete-first APIs like `config.database.url`.
+- Avoid string-key access patterns like `configService.get('DATABASE_URL')` for primary APIs.
+- Prefer explicit behavior over magic behavior.
+- Error messages should be actionable and explain what the developer should fix.
+
+## TypeScript And Code Style
+
+- Use strict TypeScript with strong inference where possible.
+- Avoid `any`, unsafe casts, and clever typing tricks that hurt readability.
+- Keep functions small, files focused, and public APIs stable.
+- Prefer composition over inheritance.
+- Prefer simple runtime code backed by good types over type-level cleverness.
+
+## NestJS Libraries
+
+- Use NestJS dependency injection, dynamic modules, provider architecture, and modular structure correctly.
+- Libraries should feel native to NestJS without breaking framework conventions.
+
+## Docs And Tests
+
+- Documentation is part of the product. Every package needs a README, installation guide, quick start, examples, and API explanation.
+- Test important API behavior, edge cases, developer experience, and predictable outputs.
+- Avoid brittle tests.
+- Before considering work complete, run relevant typecheck, tests, and build commands.
+- Examples in docs should match working package APIs.
+
+## First Package Scope
+
+For `@modernstack/config` v1, focus only on environment loading, validation, typed config access, and clean API design. Do not add auth, queues, notifications, AI generators, or complex infrastructure yet.
